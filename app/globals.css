@@ -1,0 +1,207 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  background: #0a0a0a;
+  color: #f5f5f5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark Mode Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a3a;
+}
+
+/* Minimal Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-pulse-slow {
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce 1.2s ease-in-out infinite;
+}
+
+/* Enhanced Dark Mode Message Bubbles */
+.message-user {
+  background: #ffffff;
+  color: #000000 !important;
+  border-radius: 18px 18px 3px 18px;
+  padding: 15px 20px;
+  max-width: 70%;
+  margin-left: auto;
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.15);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.message-user * {
+  color: #000000 !important;
+}
+
+.message-bot {
+  background: #1a1a1a;
+  color: #ececec;
+  border-radius: 18px 18px 18px 3px;
+  padding: 16px 20px;
+  max-width: 85%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  border: 1px solid #282828;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* Dark Mode Typing Indicator */
+.typing-indicator {
+  display: flex;
+  gap: 5px;
+  padding: 18px;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #666;
+  animation: bounce 1.2s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Dark Mode Markdown Styles */
+.chat-markdown h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.2rem;
+  margin-bottom: 0.6rem;
+  color: #f5f5f5;
+  letter-spacing: -0.01em;
+}
+
+.chat-markdown h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.4rem;
+  margin-bottom: 0.7rem;
+  color: #f5f5f5;
+  letter-spacing: -0.01em;
+}
+
+.chat-markdown p {
+  margin-bottom: 0.9rem;
+  line-height: 1.7;
+  color: #d5d5d5;
+}
+
+.chat-markdown strong {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.chat-markdown ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.chat-markdown ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+  margin-bottom: 0.9rem;
+}
+
+.chat-markdown li {
+  margin-bottom: 0.5rem;
+  line-height: 1.7;
+  color: #d5d5d5;
+}
+
+.chat-markdown li strong {
+  color: #ffffff;
+}
+
+/* Dark Mode Input Focus */
+input:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+  border-color: #f5f5f5;
+}
+
