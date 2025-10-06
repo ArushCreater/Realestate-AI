@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   request: Request,
-  { params }: { params: { locality: string } }
+  { params }: { params: Promise<{ locality: string }> }
 ) {
   try {
-    const locality = params.locality;
+    const { locality } = await params;
     
     const response = await fetch(
       `${process.env.PYTHON_API_URL || 'http://localhost:8000'}/locality-stats/${encodeURIComponent(locality)}`
