@@ -21,18 +21,39 @@ app.add_middleware(
 )
 
 # Load Parquet data
-PARQUET_PATH = "property_data.parquet"
+# For deployment: Set PARQUET_PATH env var to point to your uploaded file
+# Or set PARQUET_FILE_URL to auto-download from cloud storage
+PARQUET_PATH = os.getenv("PARQUET_PATH", "property_data.parquet")
+PARQUET_FILE_URL = os.getenv("PARQUET_FILE_URL")  # Optional: URL to download from
 df = None
 
 @app.on_event("startup")
 async def load_data():
     global df
+    
+    # Auto-download from URL if file doesn't exist (useful for deployment)
+    if not os.path.exists(PARQUET_PATH) and PARQUET_FILE_URL:
+        print(f"📥 Downloading parquet file from {PARQUET_FILE_URL[:50]}...")
+        try:
+            import requests
+            response = requests.get(PARQUET_FILE_URL, timeout=300)
+            response.raise_for_status()
+            with open(PARQUET_PATH, 'wb') as f:
+                f.write(response.content)
+            print(f"✅ Downloaded parquet file ({len(response.content) / 1024 / 1024:.1f} MB)")
+        except Exception as e:
+            raise Exception(f"❌ Failed to download parquet file: {e}")
+    
     if not os.path.exists(PARQUET_PATH):
         raise Exception(
             f"❌ Parquet file not found at {PARQUET_PATH}\n"
-            "Run: python convert_to_parquet.py first!"
+            "Options:\n"
+            "1. Run: python convert_to_parquet.py (local dev)\n"
+            "2. Upload property_data.parquet to deployment server\n"
+            "3. Set PARQUET_FILE_URL env var to auto-download"
         )
-    print("📊 Loading property data from Parquet...")
+    
+    print(f"📊 Loading property data from {PARQUET_PATH}...")
     df = pd.read_parquet(PARQUET_PATH)
     print(f"✅ Loaded {len(df):,} property records")
 
