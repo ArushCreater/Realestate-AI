@@ -1,89 +1,45 @@
-# 🏘️ NSW Real Estate AI Chatbot
+# Python Backend for NSW Property Data
 
-AI chatbot with **Gemini function calling** + **Pandas/Parquet backend** for fast, accurate property data queries.
+Fast Pandas + Parquet backend for querying 1.8M+ property records.
 
-## 🚀 Quick Start
+## Setup
 
-### 0. Get Data Files (Required)
+1. **Install Python dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-⚠️ **Data files are NOT included in this repo** (too large for GitHub: 238MB CSV)
+2. **Convert CSV to Parquet** (one-time, takes ~5 minutes):
+   ```bash
+   python convert_to_parquet.py
+   ```
+   This converts the 238MB CSV to ~50MB Parquet file with 10x faster queries.
 
-You need the NSW property sales CSV file:
-- Place `nsw-property-sales-data-updated20251006.csv` in the **project root**
-- The Python backend will convert it to Parquet format
+3. **Start the API server**:
+   ```bash
+   uvicorn main:app --reload
+   ```
+   
+   API will run on http://localhost:8000
 
-### 1. Setup Python Backend
+## API Endpoints
 
-```bash
-cd python-backend
-pip install -r requirements.txt
-python convert_to_parquet.py  # One-time: converts CSV to Parquet (~5 min)
-uvicorn main:app --reload      # Start API server
-```
+- `POST /average-price` - Get average prices for a locality
+- `POST /market-trends` - Get year-over-year trends
+- `POST /top-localities` - Get top suburbs by various metrics
+- `POST /price-range` - Find properties in a price range
+- `GET /locality-stats/{locality}` - Comprehensive locality stats
+- `GET /suburbs` - List available suburbs
 
-### 2. Setup Next.js Frontend
+## Test the API
 
-```bash
-npm install
-```
+Visit http://localhost:8000/docs for interactive API documentation.
 
-Get API key from: https://makersuite.google.com/app/apikey
+## How It Works
 
-Edit `.env.local`:
-```bash
-GEMINI_API_KEY=your_api_key_here
-PYTHON_API_URL=http://localhost:8000
-```
-
-```bash
-npm run dev  # Start chatbot at http://localhost:3000
-```
-
-## ✨ Architecture
-
-**Frontend (Next.js)**: Chatbot UI with smooth animations
-↓
-**Gemini 2.0 Flash**: AI with function calling capabilities
-↓
-**Python FastAPI**: REST API for data queries
-↓
-**Pandas + Parquet**: 1.8M records, 10x faster than CSV
-
-## 🔧 How It Works
-
-1. **User**: "What's the average house price in Castle Hill in 2022?"
-2. **Gemini**: Calls `get_average_price(locality="Castle Hill", year=2022)`
-3. **Python API**: Queries Parquet with Pandas → returns structured data
-4. **Gemini**: Interprets results → conversational response
-5. **User**: Gets accurate answer with context and analysis
-
-## 📊 Available Functions
-
-Gemini can call these functions automatically:
-
-- `get_average_price` - Average prices by locality/year/type
-- `get_market_trends` - Year-over-year price changes
-- `get_top_localities` - Best suburbs by various metrics
-- `get_price_range` - Find properties in budget
-- `get_locality_stats` - Comprehensive area statistics
-
-## 🎨 Features
-
-- 💬 Natural chat interface
-- 🎯 Accurate data (not hallucinated!)
-- ⚡ Fast queries (<1 second)
-- 📊 1.8M+ real property records
-- ✨ Smooth animations
-- 🔮 Price predictions & investment advice
-
-## 🌐 Deploy
-
-**Python Backend**: Deploy to Railway, Render, or AWS
-**Next.js Frontend**: Deploy to Vercel
-
-Add environment variables:
-- `GEMINI_API_KEY`
-- `PYTHON_API_URL` (your deployed Python API URL)
-
-Built with Next.js 15, React 18, TypeScript, FastAPI, Pandas
+1. User asks question in Next.js chatbot
+2. Gemini analyzes the question and calls appropriate functions
+3. Functions query the Parquet data via this Python API
+4. Structured results return to Gemini
+5. Gemini interprets and explains the data conversationally
 
