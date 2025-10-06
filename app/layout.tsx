@@ -1,22 +1,23 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next";
+import "./globals.css";
+import Navigation from "@/components/Navigation";
 
 export const metadata: Metadata = {
-  title: 'NSW Real Estate AI - Property Price Predictions & Insights',
-  description: 'AI-powered NSW property market analysis, price predictions, and investment recommendations powered by comprehensive historical sales data.',
-}
+  title: "NSW Property Insights - AI-Powered Real Estate Analytics",
+  description: "Predict prices, analyze trends, and discover the best suburbs to buy in NSW using AI",
+};
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <body className="antialiased">
+      <body>
+        <Navigation />
         {children}
       </body>
     </html>
-  )
+  );
 }
-
