@@ -83,9 +83,13 @@ class TopLocalitiesQuery(BaseModel):
 # API Endpoints
 @app.get("/")
 async def root():
+    # Calculate overall average price
+    avg_price = float(df['Purchase price'].mean()) if df is not None and not df.empty else 0
+    
     return {
         "message": "NSW Property Data API",
         "total_records": int(len(df)) if df is not None else 0,
+        "avg_price": avg_price,
         "endpoints": {
             "average_price": "/average-price",
             "price_range": "/price-range",
