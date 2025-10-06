@@ -50,24 +50,21 @@ export default function Dashboard() {
 
   const fetchStats = async () => {
     try {
-      // Fetch basic stats from Python backend
-      const response = await fetch(process.env.NEXT_PUBLIC_PYTHON_API_URL || 'http://localhost:8000');
+      // Fetch basic stats via API route
+      const response = await fetch('/api/stats');
       const data = await response.json();
       
-      // Fetch top suburb using POST
-      const topSuburbResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_PYTHON_API_URL || 'http://localhost:8000'}/top-localities`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            limit: 1,
-            property_type: 'residence',
-          }),
-        }
-      );
+      // Fetch top suburb using POST via API route
+      const topSuburbResponse = await fetch('/api/top-localities', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          limit: 1,
+          property_type: 'residence',
+        }),
+      });
       const topSuburbData = await topSuburbResponse.json();
       
       setStats({

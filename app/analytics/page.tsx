@@ -24,20 +24,17 @@ export default function AnalyticsPage() {
 
     try {
       const currentYear = new Date().getFullYear();
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_PYTHON_API_URL || 'http://localhost:8000'}/market-trends`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            locality: localityName,
-            start_year: 2010,
-            end_year: currentYear,
-          }),
-        }
-      );
+      const response = await fetch('/api/market-trends', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          locality: localityName,
+          start_year: 2010,
+          end_year: currentYear,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error('Suburb not found or no data available');

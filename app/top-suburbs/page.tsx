@@ -21,19 +21,16 @@ export default function TopSuburbsPage() {
   const fetchTopSuburbs = async () => {
     setLoading(true);
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_PYTHON_API_URL || 'http://localhost:8000'}/top-localities`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            limit: limit,
-            property_type: filter === 'residence' ? 'residence' : null,
-          }),
-        }
-      );
+      const response = await fetch('/api/top-localities', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          limit: limit,
+          property_type: filter === 'residence' ? 'residence' : null,
+        }),
+      });
       const data = await response.json();
       setSuburbs(data.top_localities || []);
     } catch (error) {

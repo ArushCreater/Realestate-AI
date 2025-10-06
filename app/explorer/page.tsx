@@ -25,9 +25,7 @@ export default function ExplorerPage() {
     setError('');
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_PYTHON_API_URL || 'http://localhost:8000'}/locality-stats/${encodeURIComponent(searchQuery)}`
-      );
+      const response = await fetch(`/api/locality-stats/${encodeURIComponent(searchQuery)}`);
 
       if (!response.ok) {
         throw new Error('Suburb not found');
