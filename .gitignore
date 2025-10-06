@@ -35,3 +35,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Large data files (too big for GitHub)
+*.csv
+*.parquet
+python-backend/*.parquet
+python-backend/__pycache__/
+
