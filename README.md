@@ -4,6 +4,14 @@ AI chatbot with **Gemini function calling** + **Pandas/Parquet backend** for fas
 
 ## 🚀 Quick Start
 
+### 0. Get Data Files (Required)
+
+⚠️ **Data files are NOT included in this repo** (too large for GitHub: 238MB CSV)
+
+You need the NSW property sales CSV file:
+- Place `nsw-property-sales-data-updated20251006.csv` in the **project root**
+- The Python backend will convert it to Parquet format
+
 ### 1. Setup Python Backend
 
 ```bash
